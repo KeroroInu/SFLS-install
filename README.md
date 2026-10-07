@@ -1,21 +1,21 @@
 # SFLS 安装
 
-> 暂停安装：0.1.3 发现 npm 安装目录识别问题，请勿安装该版本。正在发布修复版；下面旧的 0.1.3 命令暂不使用。
+> 请勿安装 0.1.3：该版本存在 npm 安装目录识别问题。请使用下方 0.1.4；旧标签仅留作追溯。
 
 SFLS 是课堂编程学习伙伴。先从老师的平台下载任务包，解压后在该文件夹启动 SFLS。
 
-当前版本：**0.1.3，课堂预览版**。这是公开安装分发仓库，不存放学生数据或 API 密钥。
+当前版本：**0.1.4，课堂预览版**。这是公开安装分发仓库，不存放学生数据或 API 密钥。
 
 ## Mac：在终端复制这一行
 
 ```sh
-f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.3/install.sh' -o "$f" && bash "$f"
+f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.4/install.sh' -o "$f" && bash "$f"
 ```
 
 ## Windows：在 PowerShell 复制这一行
 
 ```powershell
-& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.3/install.ps1' -OutFile $f; & $f }
+& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.4/install.ps1' -OutFile $f; & $f }
 ```
 
 Windows 如果提示禁止执行脚本，请交给老师按学校规定预装，不要关闭安全防护。Windows 安装尚待学校真机验收。
@@ -44,9 +44,11 @@ sfls
 
 ## 版本与声明
 
-安装地址固定为 `v0.1.3`；更新会使用新版本，不移动旧标签。两平台 ZIP 的 SHA-256 见 `SHA256SUMS`。本仓库提供 SFLS 自有代码的课堂体验发行件，不代表授予其开源许可。运行所用第三方组件遵循各自许可证，见安装包内 `THIRD_PARTY_NOTICES.md`。
+安装地址固定为 `v0.1.4`；更新会使用新版本，不移动旧标签。两平台 ZIP 的 SHA-256 见 `SHA256SUMS`。本仓库提供 SFLS 自有代码的课堂体验发行件，不代表授予其开源许可。运行所用第三方组件遵循各自许可证，见安装包内 `THIRD_PARTY_NOTICES.md`。
 
-0.1.3 修复了 Homebrew 升级导致 Node 路径失效、npm 依赖指向临时安装目录的问题。重新运行上面的新版安装命令即可升级，不覆盖任务作品或账户配置。
+0.1.4 修复了 Homebrew 升级导致 Node 路径失效、npm 依赖指向临时安装目录的问题，并固定独立安装目录，避免 npm 上溯修改个人项目。重新运行上面的新版安装命令即可升级，不覆盖任务作品或账户配置。
+
+如果使用过 0.1.3 且安装自检失败，请先核对个人目录是否出现新增的 @keroroinu/sfls 依赖、原 npm 工具是否仍在。升级不能恢复已被 npm 移除的旧依赖，请联系老师人工处理，不要删除整个共享 node_modules。
 
 ## 卸载
 
