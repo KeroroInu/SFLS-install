@@ -2,18 +2,18 @@
 
 SFLS 是课堂编程学习伙伴。先从老师的平台下载任务包，解压后在该文件夹启动 SFLS。
 
-当前版本：**0.1.2，课堂预览版**。这是公开安装分发仓库，不存放学生数据或 API 密钥。
+当前版本：**0.1.3，课堂预览版**。这是公开安装分发仓库，不存放学生数据或 API 密钥。
 
 ## Mac：在终端复制这一行
 
 ```sh
-f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.2/install.sh' -o "$f" && bash "$f"
+f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.3/install.sh' -o "$f" && bash "$f"
 ```
 
 ## Windows：在 PowerShell 复制这一行
 
 ```powershell
-& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.2/install.ps1' -OutFile $f; & $f }
+& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.3/install.ps1' -OutFile $f; & $f }
 ```
 
 Windows 如果提示禁止执行脚本，请交给老师按学校规定预装，不要关闭安全防护。Windows 安装尚待学校真机验收。
@@ -42,4 +42,30 @@ sfls
 
 ## 版本与声明
 
-安装地址固定为 `v0.1.2`；更新会使用新版本，不移动旧标签。两平台 ZIP 的 SHA-256 见 `SHA256SUMS`。本仓库提供 SFLS 自有代码的课堂体验发行件，不代表授予其开源许可。运行所用第三方组件遵循各自许可证，见安装包内 `THIRD_PARTY_NOTICES.md`。
+安装地址固定为 `v0.1.3`；更新会使用新版本，不移动旧标签。两平台 ZIP 的 SHA-256 见 `SHA256SUMS`。本仓库提供 SFLS 自有代码的课堂体验发行件，不代表授予其开源许可。运行所用第三方组件遵循各自许可证，见安装包内 `THIRD_PARTY_NOTICES.md`。
+
+0.1.3 修复了 Homebrew 升级导致 Node 路径失效、npm 依赖指向临时安装目录的问题。重新运行上面的新版安装命令即可升级，不覆盖任务作品或账户配置。
+
+## 卸载
+
+先关闭其他 SFLS 窗口，再在终端运行（无需进入任务目录）：
+
+```sh
+sfls uninstall
+```
+
+会先列出删除范围，输入 `yes` 确认后，删除 SFLS 专用程序、下载的 Node/Python、缓存，以及本机账户、API 密钥和配置，同时移除个人 PATH 的 SFLS 入口。
+
+可选命令：
+
+```sh
+sfls uninstall --keep-data   # 保留账户、模型配置及密钥，只删除专用程序与环境
+sfls uninstall --dry-run     # 预览删除范围，不实际删除
+sfls uninstall --yes         # 跳过确认，执行默认清理
+```
+
+任务文件夹内的代码、对话记录和提交包始终保留，不扫描磁盘删除学生作品；系统原有 Node/Python、服务器数据也不受影响。Mac 原终端配置备份保留。任务内 Python 环境若依赖被删除的专用解释器，重装 SFLS 后需重新准备。共用电脑不要随意保留账户和密钥。
+
+**旧版 0.1.2 或启动失败：**可先升级；也可下载新版 ZIP，解压后在安装包目录运行 `bash Uninstall.command`（Mac）或 `& .\Uninstall.ps1`（Windows），选项相同且不依赖 Node。运行中、目录链接、自定义 SFLS_HOME 等情况会停止并要求人工处理，不会强行清理。
+
+如果曾通过 npm 全局安装，另运行 `npm uninstall -g @keroroinu/sfls`；以上卸载脚本仅清理 SFLS 专用目录，不修改 npm 的共享目录。卸载后重新打开终端。Windows 尚待机房真机验收。
