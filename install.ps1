@@ -1,4 +1,5 @@
 $ErrorActionPreference = 'Stop'
+throw 'SFLS 0.1.3 is withdrawn. Please wait for the corrected installer.'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $sflsDownloadDir = Join-Path ([IO.Path]::GetTempPath()) ('sfls-online-' + [guid]::NewGuid())
 New-Item -ItemType Directory -Path $sflsDownloadDir | Out-Null

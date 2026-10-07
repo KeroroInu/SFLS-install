@@ -1,4 +1,6 @@
 #!/bin/bash
+echo 'SFLS 0.1.3 is withdrawn. Please wait for the corrected installer.' >&2
+exit 1
 set -euo pipefail
 if [ "$(uname -s)" != Darwin ]; then echo 'This command is for macOS.'; exit 1; fi
 SFLS_DOWNLOAD_DIR="$(mktemp -d "${TMPDIR:-/tmp}/sfls-online.XXXXXX")"
