@@ -1,0 +1,16 @@
+{
+  "schema": "sfls-update/1",
+  "version": "0.1.10",
+  "files": [
+    {
+      "platform": "mac",
+      "url": "https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.10/SFLS-0.1.10-mac.zip",
+      "sha256": "b68a73493113b9ffded71179e628fa12410eca5a953624bf6c8dbd223c8fb8c3"
+    },
+    {
+      "platform": "windows",
+      "url": "https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.10/SFLS-0.1.10-windows.zip",
+      "sha256": "a8234e38e2c48d82d5bc8208742f3481e404e8a12e46a35407e48261fa56c8a5"
+    }
+  ]
+}
