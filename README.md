@@ -1,12 +1,14 @@
 # SFLS 安装
 
-> 请勿安装 0.1.3：该版本存在 npm 安装目录识别问题。请使用下方 0.1.12；旧标签仅留作追溯。
+> 请使用下方 0.1.13。0.1.11/0.1.12 离线包有启动入口语法错误，不再分发；0.1.3 有 npm 安装目录识别问题。旧标签仅留作追溯。
 
 SFLS 是课堂编程学习伙伴。先从老师的平台下载任务包，解压后在该文件夹启动 SFLS。
 
-当前版本：**0.1.12，课堂试用版**。这是公开安装分发仓库，不存放学生数据或 API 密钥。
+当前版本：**0.1.13，课堂试用版**。这是公开安装分发仓库，不存放学生数据或 API 密钥。
 
-2026-10-15 构建，源码提交 `5f91e2c`，支架细则 `2026-10-14.1`；82 项自动测试通过。测试不代表真实模型教学效果或 Windows 机房环境已验证。
+2026-10-15 构建，源码提交 `d8d98af`，支架细则 `2026-10-14.1`；86 项自动测试通过。已验证生成入口语法、实际执行与 Mac 两种架构的隔离安装；Windows 完整安装仍请学校真机复测。
+
+0.1.13 修复离线安装器生成 `launch.mjs` 时缺少闭合括号的问题。现在安装器会先检查启动入口语法，并通过该入口实际执行 `--version`，成功后才启用。旧离线包已经安装但启动不了的电脑，请重新下载教师端的 0.1.13 完整安装包，解压后运行 `Install.cmd`；不需要先卸载，不清理作品和账户。
 
 0.1.12 修复课堂平台登录后的身份校验，检查 API key 中误粘贴的中文、说明文字等，避免 ByteString 报错；支持教师提供的离线 Python 和课程依赖。GitHub 仍提供联网安装包，完整离线包请从教师端获取。
 
@@ -22,18 +24,20 @@ SFLS 是课堂编程学习伙伴。先从老师的平台下载任务包，解压
 
 系统终端可用 `sfls update`，仅检查版本用 `sfls update --check`。请先结束 AI 操作、关闭游戏和其他 SFLS 窗口；安装器仍可能询问下载或注册许可。两班请按老师要求统一升级，不自动后台更新。
 
-**0.1.9 及更早版本没有这条命令**，先用下方安装指令升级一次到 0.1.12，以后才可使用。更新清单是本仓库 main 的 `latest.json`，安装包使用不可变版本标签。
+**0.1.9 及更早版本没有这条命令**，先用下方安装指令升级一次到 0.1.13，以后才可使用。更新清单是本仓库 main 的 `latest.json`，安装包使用不可变版本标签。启动不了时无法使用 `/update`，请重新运行新版安装包。
 
 ## Mac：在终端复制这一行
 
 ```sh
-f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.12/install.sh' -o "$f" && bash "$f"
+f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.13/install.sh' -o "$f" && bash "$f"
 ```
 
 ## Windows：在 PowerShell 复制这一行
 
+不要直接粘贴到“命令提示符”（CMD）。若当前提示符是 `C:\Users\...>`，先输入 `powershell`，看到 `PS C:\Users\...>` 后再粘贴下面的命令。安装包用户可以直接完整解压后双击 `Install.cmd`，无需粘贴命令。
+
 ```powershell
-& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.12/install.ps1' -OutFile $f; & $f }
+& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.13/install.ps1' -OutFile $f; & $f }
 ```
 
 Windows 如果提示禁止执行脚本，请交给老师按学校规定预装，不要关闭安全防护。Windows 安装尚待学校真机验收。
@@ -49,7 +53,7 @@ sfls
 首次使用会引导登录本人平台账户、输入老师提供的模型密钥，以及准备本课 Python 环境。也可以双击新版任务包中的 `Start`。
 
 API key 输入时不回显；缺少 Python 时只有输入 `y` 才会同意下载，直接回车表示取消。
-在系统终端输入 `sfls --version` 应显示 `0.1.12`。如果还显示旧版，先关闭并重新打开终端，检查是否仍用了旧的安装链接。
+在系统终端输入 `sfls --version` 应显示 `0.1.13`。如果还显示旧版，先关闭并重新打开终端，检查是否仍用了旧的安装链接。
 进入后可直接说“帮我运行一下”“停一下”，或用 `/play`、`/stop`。自动运行使用本课环境和 `project/main.py`，可打开图形游戏窗口；独立交互终端（如 `input()`、curses）暂不支持。进程结束不代表功能通过，还需观察游戏效果。
 
 完成后关闭作品，用 `/submit` 确认上传，或 `/pack` 打包交给老师。包中含任务作品、原始对话、工具结果、代码快照及客户端时间记录；支架等级是 AI 自述，不是能力评分，耗时也不是有效学习时长。密钥不应写入项目或聊天。两个班请统一版本。
@@ -70,9 +74,9 @@ API key 输入时不回显；缺少 Python 时只有输入 `y` 才会同意下�
 
 ## 版本与声明
 
-安装地址固定为 `v0.1.12`；更新会使用新版本，不移动旧标签。两平台 ZIP 的 SHA-256 见 `SHA256SUMS`。本仓库提供 SFLS 自有代码的课堂体验发行件，不代表授予其开源许可。运行所用第三方组件遵循各自许可证，见安装包内 `THIRD_PARTY_NOTICES.md`。
+安装地址固定为 `v0.1.13`；更新会使用新版本，不移动旧标签。两平台 ZIP 的 SHA-256 见 `SHA256SUMS`。本仓库提供 SFLS 自有代码的课堂体验发行件，不代表授予其开源许可。运行所用第三方组件遵循各自许可证，见安装包内 `THIRD_PARTY_NOTICES.md`。
 
-可直接下载 [Mac 0.1.12](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.12/SFLS-0.1.12-mac.zip) 或 [Windows 0.1.12](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.12/SFLS-0.1.12-windows.zip)。旧版不会自动升级；退出 SFLS 后重新运行新版安装命令，不覆盖任务作品和账户设置。
+可直接下载 [Mac 0.1.13](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.13/SFLS-0.1.13-mac.zip) 或 [Windows 0.1.13](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.13/SFLS-0.1.13-windows.zip)。旧版不会自动升级；退出 SFLS 后重新运行新版安装命令，不覆盖任务作品和账户设置。
 
 0.1.4 修复了 Homebrew 升级导致 Node 路径失效、npm 依赖指向临时安装目录的问题，并固定独立安装目录，避免 npm 上溯修改个人项目。重新运行上面的新版安装命令即可升级，不覆盖任务作品或账户配置。
 
