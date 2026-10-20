@@ -4,8 +4,8 @@ $sflsDownloadDir = Join-Path ([IO.Path]::GetTempPath()) ('sfls-online-' + [guid]
 New-Item -ItemType Directory -Path $sflsDownloadDir | Out-Null
 $sflsZip = Join-Path $sflsDownloadDir 'sfls.zip'
 Write-Host 'Downloading the SFLS installer...'
-Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.17/SFLS-0.1.17-windows.zip' -OutFile $sflsZip -TimeoutSec 300
-if ((Get-FileHash -LiteralPath $sflsZip -Algorithm SHA256).Hash.ToLowerInvariant() -ne '73e2e0f0c2ff0979bbce6d58838c556a03da59795265bf3fe6ca4bd503dff4f5') { throw 'Checksum failed. Installer not executed.' }
+Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.18/SFLS-0.1.18-windows.zip' -OutFile $sflsZip -TimeoutSec 300
+if ((Get-FileHash -LiteralPath $sflsZip -Algorithm SHA256).Hash.ToLowerInvariant() -ne '7017139bf6e188f29f782998fec14f56cb6afb56835a3909b325c99cfda5358d') { throw 'Checksum failed. Installer not executed.' }
 $sflsPackage = Join-Path $sflsDownloadDir 'package'
 Expand-Archive -LiteralPath $sflsZip -DestinationPath $sflsPackage
 $sflsOriginalLocation = Get-Location
