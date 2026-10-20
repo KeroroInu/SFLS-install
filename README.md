@@ -1,113 +1,66 @@
-# SFLS 安装
+# SFLS 安装与升级
 
-> 请使用下方 0.1.14。0.1.11/0.1.12 离线包有启动入口语法错误，不再分发；0.1.3 有 npm 安装目录识别问题。旧标签仅留作追溯。
+当前版本：**0.1.16，课堂试用版**。固定版本文件发布并校验后才启用更新，实际版本以本仓库 `main/latest.json` 为准。
 
-SFLS 是课堂编程学习伙伴。先从老师的平台下载任务包，解压后在该文件夹启动 SFLS。
+公开仓库只放程序发行件，不放学生数据或 API key。源码提交 `64eb3e1`，支架修订 `2026-10-20.1`；139项自动测试通过。Mac环境与本地打包已验收，Windows机房与新提示的真实模型对话仍需复测。
 
-当前版本：**0.1.14，课堂试用版**。这是公开安装分发仓库，不存放学生数据或 API 密钥。
+## 已安装：直接升级
 
-2026-10-15 构建，源码提交 `e853237`，支架细则 `2026-10-15.2`；88 项自动测试通过。已验证生成入口语法、实际执行与 Mac 环境检查；Windows 完整安装仍请学校真机复测。
-
-0.1.14 将课堂引导改为“读取已有设计 → 邀请学生表达关键实现思路 → 按需提示 → 局部实现 → 验证”。不会时给概念、少量选项、数据例子或伪代码，仍有困难就解释并帮写好；已有设计不重复问，不以答对换代码。可自动完成的测试由智能体负责，不再以连续试玩清单代替学生设计讨论。两班使用相同支架，前后测保持自由协作。三组 Flash 合成对话已抽查，不代表课堂效果已验证。
-
-0.1.13 已修复离线安装器生成 `launch.mjs` 时缺少闭合括号的问题。安装器会先检查启动入口语法，并通过该入口实际执行 `--version`，成功后才启用。旧离线包已经安装但启动不了的电脑，请重新下载 0.1.14 完整安装包，解压后运行 `Install.cmd`；不需要先卸载，不清理作品和账户。
-
-已知问题：部分 Windows 电脑粘贴 API key 后仍会被本地格式检查拒绝，尚未定位修复；0.1.14 的支架调整不是密钥问题修复。
-
-机房无法访问 GitHub 时，优先从[学生平台](http://124.222.152.227/)顶部“安装 SFLS · Windows”下载完整离线包；[Gitee 安装入口](https://gitee.com/kerorororo/sfls-install)也有说明。仓库中的小型 ZIP 是联网安装包，不包含全部环境。当前 `/update` 仍依赖 GitHub，无法访问时用平台安装包升级。
-
-0.1.12 修复课堂平台登录后的身份校验，检查 API key 中误粘贴的中文、说明文字等，避免 ByteString 报错；支持教师提供的离线 Python 和课程依赖。GitHub 仍提供联网安装包，完整离线包请从教师端获取。
-
-经教师确认，暂时仅对课堂地址 `http://124.222.152.227` 允许公网 HTTP 登录和提交；其他公网 HTTP 地址或端口仍拒绝。HTTP 不加密密码、凭证和作品，请只用课堂专用密码，不复用其他账号密码。此例外应在平台启用 HTTPS 后移除；没有关闭证书校验或允许携带凭证跳转。
-
-新版在关键代码处邀请学生预测、判断或解释；答不上来就解释并帮助写好，继续在原作品上修改，不以答对换代码。课堂打包前缺少实现想法时，邀请补一两句并自动写入 README，可跳过，不用自己排版；已有说明或可引用的原话不重复问，前后测不加这个提醒。新增 `/advice` 建议入口，修复 `sfls --resume`；沿用自然语言运行、像素贪吃蛇 Logo、用户/AI 区分配色、安全重新打包与 `.drawio` 原件收集。
-
-`/advice` 需要先登录平台，实名确认后发送原文；平台必须另行部署 `/api/advice` 配套接口。仅升级 SFLS 不代表老师的服务器已经支持建议收件。未确认送达时本地保留，可重试；不要填写密码或 API key。
-
-## 升级
-
-0.1.10 起支持 `/update`，也支持 `/updata`：检查新版，确认后保存对话、退出界面并运行安装器。作品、记录、账户和 API key 保留；失败时恢复旧启动入口。完成后在原任务文件夹输入 `sfls --resume` 继续本课。
-
-系统终端可用 `sfls update`，仅检查版本用 `sfls update --check`。请先结束 AI 操作、关闭游戏和其他 SFLS 窗口；安装器仍可能询问下载或注册许可。两班请按老师要求统一升级，不自动后台更新。
-
-**0.1.9 及更早版本没有这条命令**，先用下方安装指令升级一次到 0.1.14，以后才可使用。更新清单是本仓库 main 的 `latest.json`，安装包使用不可变版本标签。启动不了时无法使用 `/update`，请重新运行新版安装包。
-
-## Mac：在终端复制这一行
+先结束AI操作、关闭游戏和其他SFLS窗口，在系统终端运行：
 
 ```sh
-f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.14/install.sh' -o "$f" && bash "$f"
+sfls update
 ```
 
-## Windows：在 PowerShell 复制这一行
+也可在SFLS里输入 `/update`（兼容 `/updata`）；仅检查版本用 `sfls update --check`。确认后保存记录并运行安装器，仍可能询问下载或个人命令注册许可。完成后用 `sfls --version` 核对 `0.1.16`，回原任务文件夹用 `sfls --resume` 继续。
 
-不要直接粘贴到“命令提示符”（CMD）。若当前提示符是 `C:\Users\...>`，先输入 `powershell`，看到 `PS C:\Users\...>` 后再粘贴下面的命令。安装包用户可以直接完整解压后双击 `Install.cmd`，无需粘贴命令。
+升级不清理作品、记录、账户和模型密钥；失败时恢复旧启动入口。有效的现行离线Python/wheel关联会保留；旧版已经丢失的离线关联不会通过扫描历史目录猜测恢复。更新需要GitHub和npm网络，不是完整离线安装。
+
+0.1.9及更早版本、启动不了或找不到命令时，用下面的安装指令。开发目录、npm安装和自定义 `SFLS_HOME` 不会被自动覆盖。
+
+## Mac 安装／升级：复制一行
+
+```sh
+f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.16/install.sh' -o "$f" && bash "$f"
+```
+
+## Windows：在 PowerShell 复制一行
+
+不是CMD。学校禁止脚本时，请老师按学校批准的方式预装，不要关闭安全防护。
 
 ```powershell
-& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.14/install.ps1' -OutFile $f; & $f }
+& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.16/install.ps1' -OutFile $f; & $f }
 ```
 
-Windows 如果提示禁止执行脚本，请交给老师按学校规定预装，不要关闭安全防护。Windows 安装尚待学校真机验收。
+仓库中的小型ZIP是联网包，不含全部环境；缺环境时还需nodejs.org、GitHub或PyPI。无法访问GitHub时，使用老师从平台分发的完整离线包。平台安装包、服务器和Gitee不会随本次GitHub发布自动更新。
 
-## 装好后
+也可下载 [Mac 0.1.16](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.16/SFLS-0.1.16-mac.zip) / [Windows 0.1.16](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.16/SFLS-0.1.16-windows.zip)，完整解压后运行 `Install.command` / `Install.cmd`。Mac不能双击时，在安装包目录执行 `bash Install.command`。安装器未代码签名，不绕过系统安全策略。
 
-安装时按提示确认下载和注册终端命令。重新打开终端，进入解压后的任务文件夹，输入：
+## 这一版
 
-```sh
-sfls
-```
+- 第一课共同体验；第二课起两班宏观路线随 `materials/TASK.md` 提供。旧任务不会自动更新，需教师另发新版。两班共用局部L1—L4帮助。
+- 默认先开放表达，一轮补一个缺口，按需才给选项。关键代码先邀请试写1–3行；已尝试、不会或想看示范时解释并帮写，不以答对或手打为条件。
+- `Start`、`sfls`、`sfls run` 统一启动。完整离线包的本地依赖自动准备；本课环境缺pip时用ensurepip修复，不改系统Python。
+- 新配置默认官方 `deepseek/deepseek-flash`，保留已有自定义模型。配置可用不等于账号权限、模型效果或网页传图已验收。
 
-首次使用会引导登录本人平台账户、输入老师提供的模型密钥，以及准备本课 Python 环境。也可以双击新版任务包中的 `Start`。
+历史模型测试出现过讲解、注释、验证来源和支持漏记问题，新提示不代表已全部解决，仍需核对真实对话。0.1.11/0.1.12旧离线包有启动语法错误，不再分发；旧标签仅追溯。
 
-API key 输入时不回显；缺少 Python 时只有输入 `y` 才会同意下载，直接回车表示取消。
-在系统终端输入 `sfls --version` 应显示 `0.1.14`。如果还显示旧版，先关闭并重新打开终端，检查是否仍用了旧的安装链接。
-进入后可直接说“帮我运行一下”“停一下”，或用 `/play`、`/stop`。自动运行使用本课环境和 `project/main.py`，可打开图形游戏窗口；独立交互终端（如 `input()`、curses）暂不支持。进程结束不代表功能通过，还需观察游戏效果。
+## 每课使用
 
-完成后关闭作品，用 `/submit` 确认上传，或 `/pack` 打包交给老师。包中含任务作品、原始对话、工具结果、代码快照及客户端时间记录；支架等级是 AI 自述，不是能力评分，耗时也不是有效学习时长。密钥不应写入项目或聊天。两个班请统一版本。
+从本人平台下载任务包，解压到新文件夹，双击 `Start` 或在任务目录运行 `sfls`。免重复学号密码需要新版平台配套发包；旧任务仍用原登录方式，仅升级客户端不会部署服务器。
 
-打包后又修改了作品？在 SFLS 内输入 `/repack`，确认后生成新包；旧 ZIP 保留，新包生成失败不影响旧待提交包。系统终端也可用 `sfls pack --new`。`/submit` 重传现有待提交包，不会自动包含打包后的改动。离线 `init` 示例没有平台身份绑定，正式课堂请从本人平台账户下载任务包。
+首次API key输入不回显，已有同身份配置复用。老师换key后，退出SFLS，在任务目录运行 `sfls model`，再运行 `sfls`。Pi的 `/login` 不是学生登录。不要把密码或key写进工程、README或聊天。
 
-## 安装会做什么
+直接说“帮我运行一下／停一下”，或 `/play`、`/stop`；图形窗口在本机打开，`input()`/curses交互终端暂不支持。关闭作品后 `/submit` 确认上传，或 `/pack` 保存ZIP上传平台。本地init示例与体验包不能正式提交。
 
-- 复用可用的 Node；缺少时确认下载固定版本。Python 在首次启动任务时检查，缺少时确认下载。
-- 软件放在个人 `.sfls-runtime` 目录，本课 Python 环境放在任务目录 `.sfls/environment`。
-- 经确认后注册个人 `sfls` 命令，保留原 shell/PATH 备份，不要求管理员权限、不修改机器级 PATH 或系统 Python。
-- 下载包先校验 SHA-256，再运行安装器；校验不能替代发布者签名。安装器目前没有代码签名。
-- 模型密钥不放进任务文件夹。SFLS 可执行本机命令，不是系统沙箱，请使用老师指定的实验目录与账户。
+打包后再改代码，用 `/repack`（终端用 `sfls pack --new`），旧ZIP保留。`/submit` 重传待提交原包，不自动收集后续修改。包内原始对话、代码版本、工具输出和客户端时间供复核；AI支持自述不是掌握评分，耗时不是有效学习时长。
 
-需要访问 GitHub/raw.githubusercontent.com、nodejs.org、registry.npmjs.org；缺 Python 时需要 GitHub，课程第三方库需要 PyPI。模型连接、额度和机房网络需老师提前测试。不要在第一节课临时让全班同时下载环境。
-
-无法使用在线命令时，可下载本仓库对应的 ZIP，完整解压后运行 `Install.command`（Mac）或 `Install.cmd`（Windows）。
-
-## 版本与声明
-
-安装地址固定为 `v0.1.14`；更新会使用新版本，不移动旧标签。两平台 ZIP 的 SHA-256 见 `SHA256SUMS`。本仓库提供 SFLS 自有代码的课堂体验发行件，不代表授予其开源许可。运行所用第三方组件遵循各自许可证，见安装包内 `THIRD_PARTY_NOTICES.md`。
-
-可直接下载 [Mac 0.1.14](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.14/SFLS-0.1.14-mac.zip) 或 [Windows 0.1.14](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.14/SFLS-0.1.14-windows.zip)。旧版不会自动升级；退出 SFLS 后重新运行新版安装命令，不覆盖任务作品和账户设置。
-
-0.1.4 修复了 Homebrew 升级导致 Node 路径失效、npm 依赖指向临时安装目录的问题，并固定独立安装目录，避免 npm 上溯修改个人项目。重新运行上面的新版安装命令即可升级，不覆盖任务作品或账户配置。
-
-如果使用过 0.1.3 且安装自检失败，请先核对个人目录是否出现新增的 @keroroinu/sfls 依赖、原 npm 工具是否仍在。升级不能恢复已被 npm 移除的旧依赖，请联系老师人工处理，不要删除整个共享 node_modules。
+SFLS不是系统沙箱，请用老师指定目录与普通权限。课堂暂仅允许 `http://124.222.152.227` 的HTTP例外，密码/凭据未加密，请勿复用个人密码；其他公网HTTP拒绝，证书校验不关闭。启用HTTPS后应撤销例外。
 
 ## 卸载
 
-先关闭其他 SFLS 窗口，再在终端运行（无需进入任务目录）：
+退出所有窗口后运行 `sfls uninstall`，核对范围并输入 `yes`。默认清理个人SFLS程序/环境、账户、key和配置，移除个人命令入口；不扫描或删除任务作品、对话、提交包、系统Python或服务器数据。
 
-```sh
-sfls uninstall
-```
+`sfls uninstall --keep-data` 保留个人配置，`sfls uninstall --dry-run` 仅预览。共用电脑谨慎保留密钥。启动不了可从包中运行 `bash Uninstall.command`（Mac）或 `& .\Uninstall.ps1`（Windows）。活动进程、目录链接或自定义配置会停止清理。npm全局安装另用 `npm uninstall -g @keroroinu/sfls`。
 
-会先列出删除范围，输入 `yes` 确认后，删除 SFLS 专用程序、下载的 Node/Python、缓存，以及本机账户、API 密钥和配置，同时移除个人 PATH 的 SFLS 入口。
-
-可选命令：
-
-```sh
-sfls uninstall --keep-data   # 保留账户、模型配置及密钥，只删除专用程序与环境
-sfls uninstall --dry-run     # 预览删除范围，不实际删除
-sfls uninstall --yes         # 跳过确认，执行默认清理
-```
-
-任务文件夹内的代码、对话记录和提交包始终保留，不扫描磁盘删除学生作品；系统原有 Node/Python、服务器数据也不受影响。Mac 原终端配置备份保留。任务内 Python 环境若依赖被删除的专用解释器，重装 SFLS 后需重新准备。共用电脑不要随意保留账户和密钥。
-
-**旧版 0.1.2 或启动失败：**可先升级；也可下载新版 ZIP，解压后在安装包目录运行 `bash Uninstall.command`（Mac）或 `& .\Uninstall.ps1`（Windows），选项相同且不依赖 Node。运行中、目录链接、自定义 SFLS_HOME 等情况会停止并要求人工处理，不会强行清理。
-
-如果曾通过 npm 全局安装，另运行 `npm uninstall -g @keroroinu/sfls`；以上卸载脚本仅清理 SFLS 专用目录，不修改 npm 的共享目录。卸载后重新打开终端。Windows 尚待机房真机验收。
+版本标签不可变，不移动旧标签；两平台SHA-256见 `SHA256SUMS`。SFLS自有代码的课堂发行不代表授予开源许可，第三方许可见包内 `THIRD_PARTY_NOTICES.md`。
