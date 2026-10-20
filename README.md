@@ -1,8 +1,8 @@
 # SFLS 安装与升级
 
-当前版本：**0.1.16，课堂试用版**。固定版本文件发布并校验后才启用更新，实际版本以本仓库 `main/latest.json` 为准。
+当前版本：**0.1.17，课堂试用版**。固定版本文件发布并校验后才启用更新，实际版本以本仓库 `main/latest.json` 为准。
 
-公开仓库只放程序发行件，不放学生数据或 API key。源码提交 `64eb3e1`，支架修订 `2026-10-20.1`；139项自动测试通过。Mac环境与本地打包已验收，Windows机房与新提示的真实模型对话仍需复测。
+公开仓库只放程序发行件，不放学生数据或 API key。源码提交 `ea3757d`，支架修订 `2026-10-20.2`；169项自动测试中168项通过、1项Windows专属检查跳过。Mac环境与本地打包已验收，Windows机房与新提示的真实模型对话仍需复测。
 
 ## 已安装：直接升级
 
@@ -12,7 +12,7 @@
 sfls update
 ```
 
-也可在SFLS里输入 `/update`（兼容 `/updata`）；仅检查版本用 `sfls update --check`。确认后保存记录并运行安装器，仍可能询问下载或个人命令注册许可。完成后用 `sfls --version` 核对 `0.1.16`，回原任务文件夹用 `sfls --resume` 继续。
+也可在SFLS里输入 `/update`（兼容 `/updata`）；仅检查版本用 `sfls update --check`。确认后保存记录并运行安装器，仍可能询问下载或个人命令注册许可。完成后用 `sfls --version` 核对 `0.1.17`，回原任务文件夹用 `sfls --resume` 继续。
 
 升级不清理作品、记录、账户和模型密钥；失败时恢复旧启动入口。有效的现行离线Python/wheel关联会保留；旧版已经丢失的离线关联不会通过扫描历史目录猜测恢复。更新需要GitHub和npm网络，不是完整离线安装。
 
@@ -21,7 +21,7 @@ sfls update
 ## Mac 安装／升级：复制一行
 
 ```sh
-f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.16/install.sh' -o "$f" && bash "$f"
+f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.17/install.sh' -o "$f" && bash "$f"
 ```
 
 ## Windows：在 PowerShell 复制一行
@@ -29,12 +29,25 @@ f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.git
 不是CMD。学校禁止脚本时，请老师按学校批准的方式预装，不要关闭安全防护。
 
 ```powershell
-& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.16/install.ps1' -OutFile $f; & $f }
+& { $f = Join-Path ([IO.Path]::GetTempPath()) ('sfls-' + [guid]::NewGuid() + '.ps1'); Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.17/install.ps1' -OutFile $f; & $f }
 ```
 
-仓库中的小型ZIP是联网包，不含全部环境；缺环境时还需nodejs.org、GitHub或PyPI。无法访问GitHub时，使用老师从平台分发的完整离线包。平台安装包、服务器和Gitee不会随本次GitHub发布自动更新。
+仓库中的小型ZIP是联网包，不含全部环境；缺环境时还需nodejs.org、GitHub或PyPI。无法访问GitHub时，使用老师从平台分发的完整离线包。Gitee是安装文件镜像，`sfls update`仍使用GitHub和npm，不会自动改走Gitee。
 
-也可下载 [Mac 0.1.16](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.16/SFLS-0.1.16-mac.zip) / [Windows 0.1.16](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.16/SFLS-0.1.16-windows.zip)，完整解压后运行 `Install.command` / `Install.cmd`。Mac不能双击时，在安装包目录执行 `bash Install.command`。安装器未代码签名，不绕过系统安全策略。
+也可下载 [Mac 0.1.17](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.17/SFLS-0.1.17-mac.zip) / [Windows 0.1.17](https://raw.githubusercontent.com/KeroroInu/SFLS-install/v0.1.17/SFLS-0.1.17-windows.zip)，完整解压后运行 `Install.command` / `Install.cmd`。Mac不能双击时，在安装包目录执行 `bash Install.command`。安装器未代码签名，不绕过系统安全策略。
+
+## 课堂完整离线包
+
+教师平台已发布 [Windows 0.1.17 完整离线包](http://124.222.152.227/downloads/sfls/SFLS-0.1.17-offline-windows.zip) / [Mac 0.1.17 完整离线包](http://124.222.152.227/downloads/sfls/SFLS-0.1.17-offline-mac.zip)。内含SFLS、Node.js 22.22.0、Python 3.12.12和pygame 2.6.1；安装这些组件不需要访问GitHub、npm或PyPI，AI对话和平台操作仍需联网，新任务额外依赖可能需联网。
+
+服务器暂用HTTP。请从本仓库HTTPS页面取得下列摘要核对下载完整性；这不等同于软件签名。
+
+```text
+82e4b1da5287ea5c722c42226afc56318479c2ffa3c8f84ba221aa343b6fd948  SFLS-0.1.17-offline-windows.zip
+e1b3b712c67e6bb242ecce4c02ebd93e40753f9509c65140d801cd919c48cec7  SFLS-0.1.17-offline-mac.zip
+```
+
+完整解压后运行安装器，无需先卸载。安装属于当前电脑用户；教师账号装好不等于学生账号可用，有还原系统的机房还需确认重启后能保留。
 
 ## 这一版
 
@@ -42,16 +55,18 @@ f=$(mktemp) && curl --proto '=https' --proto-redir '=https' -fL 'https://raw.git
 - 默认先开放表达，一轮补一个缺口，按需才给选项。关键代码先邀请试写1–3行；已尝试、不会或想看示范时解释并帮写，不以答对或手打为条件。
 - `Start`、`sfls`、`sfls run` 统一启动。完整离线包的本地依赖自动准备；本课环境缺pip时用ensurepip修复，不改系统Python。
 - 新配置默认官方 `deepseek/deepseek-flash`，保留已有自定义模型。配置可用不等于账号权限、模型效果或网页传图已验收。
+- 新版个人任务包携带本课限权凭据，经服务器验证后不必重复输入学号密码；旧任务包保留原登录方式，凭据过期或不匹配需从本人平台重新下载。
+- 提交前可选一起回顾真实代码，串联目标、需求、算法/方法与关键代码；不会就解释、可直接跳过。选择回顾后本次不打包或上传，之后再次输入 `/submit` 或 `/pack` 才继续。
 
 历史模型测试出现过讲解、注释、验证来源和支持漏记问题，新提示不代表已全部解决，仍需核对真实对话。0.1.11/0.1.12旧离线包有启动语法错误，不再分发；旧标签仅追溯。
 
 ## 每课使用
 
-从本人平台下载任务包，解压到新文件夹，双击 `Start` 或在任务目录运行 `sfls`。免重复学号密码需要新版平台配套发包；旧任务仍用原登录方式，仅升级客户端不会部署服务器。
+从本人平台下载任务包，解压到新文件夹，双击 `Start` 或在任务目录运行 `sfls`。新版个人任务包使用本课限权凭据，不要互相转发；旧任务仍用原登录方式，仅升级客户端不会替换旧任务包或部署服务器。
 
-首次API key输入不回显，已有同身份配置复用。老师换key后，退出SFLS，在任务目录运行 `sfls model`，再运行 `sfls`。Pi的 `/login` 不是学生登录。不要把密码或key写进工程、README或聊天。
+首次或换身份时按需配置API key，输入不回显；每个新任务首次启动会按需确认本课key，回车可沿用同身份已保存的key。老师换key时填写新key；也可退出SFLS，在任务目录运行 `sfls model`，再运行 `sfls`。升级本身不清理登录与密钥，失效凭据仍需更新。Pi的 `/login` 不是学生登录。不要把密码或key写进工程、README或聊天。
 
-直接说“帮我运行一下／停一下”，或 `/play`、`/stop`；图形窗口在本机打开，`input()`/curses交互终端暂不支持。关闭作品后 `/submit` 确认上传，或 `/pack` 保存ZIP上传平台。本地init示例与体验包不能正式提交。
+直接说“帮我运行一下／停一下”，或 `/play`、`/stop`；图形窗口在本机打开，`input()`/curses交互终端暂不支持。关闭作品后 `/submit` 确认上传，或 `/pack` 保存ZIP上传平台。若选择一起回顾代码，结束或想跳过时再次输入相应提交命令，不要求先答对。本地init示例与体验包不能正式提交。
 
 打包后再改代码，用 `/repack`（终端用 `sfls pack --new`），旧ZIP保留。`/submit` 重传待提交原包，不自动收集后续修改。包内原始对话、代码版本、工具输出和客户端时间供复核；AI支持自述不是掌握评分，耗时不是有效学习时长。
 
